@@ -1,0 +1,14 @@
+@import "./../../_colors.scss";
+
+.Header {
+  display: block;
+  height: 80px;
+  background: $header-bg-color;
+  color: $header-font-color;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}

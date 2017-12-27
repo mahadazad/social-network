@@ -1,0 +1,6 @@
+.StatusArea {
+  margin-top: 10px; }
+  .StatusArea__input {
+    padding: 0 5px;
+    border-top: none;
+    border-bottom: none; }

@@ -1,0 +1,11 @@
+.EmojiPicker {
+  position: absolute;
+  width: 338px;
+  z-index: 11; }
+  .EmojiPicker__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10; }

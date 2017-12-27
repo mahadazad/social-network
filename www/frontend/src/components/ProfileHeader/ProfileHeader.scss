@@ -1,0 +1,52 @@
+@import "./../../_colors.scss";
+
+.ProfileHeader {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  background: $profile-header-bg-color;
+  margin-bottom: 50px;
+  border: 1px solid $panel-border-color;
+  border-radius: 10px;
+
+  &__avatar-area {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 0 35px;
+    margin-top: auto;
+    color: #fff;
+  }
+
+  &__menu-area {
+    height: 60px;
+    background: $profile-header-menu-bg-color;
+    border-radius: 0 0 8px 8px;
+  }
+
+  &__details-wrap {
+    margin-left: 30px;
+  }
+
+  &__name {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+
+  &__location {
+    letter-spacing: 0.5px;
+    font-size: 0.9em;
+  }
+
+  &__avatar {
+    width: 130px;
+    height: 130px;
+    background: url(https://d2d0m32kr3hci1.cloudfront.net/chat-british-shorthair-8958b38a1b5a06fc8175_160.jpg) no-repeat;
+    background-size: cover;
+    border-radius: 100px;
+    border: 3px solid #fff;
+    transform: translateY(30px);
+  }
+}

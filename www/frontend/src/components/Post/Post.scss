@@ -1,0 +1,64 @@
+@import "./../../_colors.scss";
+
+.Post {
+  background: $post-bg-color;
+  margin-top: 30px;
+  border: 1px solid $panel-border-color;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  position: relative;
+
+  &__inner {
+    border-radius: 4px;
+    background: $post-bg-color;
+    padding: 0 25px 25px 25px;
+
+    &--has-comments {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &__content {
+    padding: 2px 0 10px 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 32px;
+    right: -22px;
+    padding: 12px 0 0 0;
+    color: #95949B;
+    font-size: 1.3em;
+    transition: all 50ms;
+  }
+
+  &__action {
+    margin: 0 5px 5px 0;
+    cursor: pointer;
+
+    &:hover {
+      .Post__action-icon {
+        background: #E16E54;
+      }
+    }
+  }
+
+  &__action-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background: #9B9FBC;
+    border-radius: 100%;
+    font-size: 1em;
+    color: #fff;
+    z-index: 1;
+    transition: all 300ms;
+  }
+}

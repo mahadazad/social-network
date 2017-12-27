@@ -1,0 +1,25 @@
+@import "./../../_colors.scss";
+
+.Comment {
+  display: flex;
+  padding: 20px;
+
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $panel-border-color;
+  }
+
+  &__avatar {
+    align-self: center;
+  }
+
+  &__right {
+    width: 100%;
+    padding: 10px 8px;
+    margin-left: 10px;
+    background: $comment-bg-color;
+    border-radius: 12px;
+    font-size: 0.85em;
+  }
+}
+

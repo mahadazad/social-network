@@ -1,0 +1,11 @@
+@import "../../_colors.scss";
+
+.StatusArea {
+  margin-top: 10px;
+
+  &__input {
+    padding: 0 5px;
+    border-top: none;
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,23 @@
+*:focus {
+  outline: none; }
+
+html, body, #root {
+  width: 100%;
+  height: 100%; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  background: #EEF2F6;
+  color: #9B9FBC; }
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #515363; }
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1368px; }

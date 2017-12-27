@@ -1,0 +1,21 @@
+@import "./../../_colors.scss";
+
+.Button {
+  background: $primary-button-bg-color;
+  border: 1px solid $primary-button-bg-color;
+  color: $primary-button-font-color;
+  font-size: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background: darken($primary-button-bg-color, 5%);
+  }
+
+  &:disabled {
+    background: lighten($primary-button-bg-color, 15%);
+    color: rgba($primary-button-font-color, 0.85);
+    border-color: lighten($primary-button-bg-color, 15%);
+  }
+}

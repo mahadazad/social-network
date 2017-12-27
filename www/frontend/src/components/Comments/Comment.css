@@ -1,0 +1,14 @@
+.Comment {
+  display: flex;
+  padding: 20px; }
+  .Comment:not(:last-child) {
+    border-bottom: 1px solid #E7ECF4; }
+  .Comment__avatar {
+    align-self: center; }
+  .Comment__right {
+    width: 100%;
+    padding: 10px 8px;
+    margin-left: 10px;
+    background: #FAFBFD;
+    border-radius: 12px;
+    font-size: 0.85em; }

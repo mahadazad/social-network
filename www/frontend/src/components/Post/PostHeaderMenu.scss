@@ -1,0 +1,34 @@
+@import "../../_colors.scss";
+
+.PostHeaderMenu {
+  min-width: 150px;
+  padding: 5px;
+  background: #fff;
+  position: absolute;
+  border: 1px solid $panel-border-color;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+
+  &__item {
+    display: block;
+    padding: 5px 10px;
+    color: #515363;
+    cursor: pointer;
+    border-radius: 2px;
+
+    &:hover {
+      background: lighten(#515363, 60%);
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+
+  }
+}

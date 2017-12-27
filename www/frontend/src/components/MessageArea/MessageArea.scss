@@ -1,0 +1,30 @@
+.MessageArea {
+  position: relative;
+
+  &__editor {
+    background: #fff;
+    font-size: 16px;
+  }
+
+  &__smile {
+    transition: 200ms all;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #717273;
+    font-size: 25px;
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      color: #7E6D39;
+      background: #F7CD46;
+    }
+  }
+}
