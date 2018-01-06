@@ -1,0 +1,11 @@
+type Comment {
+    id: ID!
+    comment: String
+    user: User
+    post: Post
+    createdAt: String
+}
+
+type Query {
+    comments(postId: String, cursor: String, limit: Int): [Comment!]!
+}

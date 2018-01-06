@@ -1,4 +1,4 @@
-.SidebarFollowers {
+.SidebarUsers {
   &__list {
     display: flex;
     flex-wrap: wrap;
@@ -7,5 +7,6 @@
 
   &__user {
     margin: 3px;
+    cursor: pointer;
   }
 }

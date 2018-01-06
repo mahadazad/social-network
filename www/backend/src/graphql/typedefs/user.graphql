@@ -1,0 +1,41 @@
+type User {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    avatar: String
+    city: String
+    country: String
+    totalFollowers: Int
+    totalFollowings: Int
+    createdAt: String
+}
+
+type LoginResponse {
+    user: User
+    token: String
+    error: String
+}
+
+type FollowResponse {
+    type: String
+    follower: User
+    following: User
+}
+
+type Query {
+    user(id: String): User!
+    followers(id: String): [User!]!
+    followings(id: String): [User!]!
+    isFollowed(followerId: String, followingId: String): Boolean
+}
+
+type Mutation {
+    createUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+    loginUser(email: String!, password: String!): LoginResponse
+    changeFollow(type: String, user: String): FollowResponse
+}
+
+type Subscription {
+    onChangeFollow: FollowResponse
+}

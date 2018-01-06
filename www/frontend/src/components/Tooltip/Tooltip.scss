@@ -1,0 +1,11 @@
+@import "../../_colors.scss";
+
+.Tooltip {
+  position: absolute;
+  font-size: 0.8em;
+  padding: 4px 5px;
+  background: $tooltip-bg-color;
+  color: $tooltip-font-color;
+  opacity: 0;
+  border-radius: 3px;
+}

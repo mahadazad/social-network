@@ -1,0 +1,14 @@
+type Post {
+    id: ID!
+    content: String
+    type: String
+    user: User
+    comments: [Comment!]!
+    likesCount: Int
+    commentsCount: Int
+    createdAt: String
+}
+
+type Query {
+    posts(userId: String, cursor: String, limit: Int): [Post!]!
+}

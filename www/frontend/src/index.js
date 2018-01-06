@@ -2,18 +2,22 @@ import 'normalize.css';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import { ApolloProvider } from 'react-apollo';
 
-import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
 import './styles.css';
 import App from './containers/App/App';
 
+import client from './apollo';
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 registerServiceWorker();

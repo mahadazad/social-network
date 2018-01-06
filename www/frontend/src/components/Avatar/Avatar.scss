@@ -1,8 +1,8 @@
 .Avatar {
   width: 36px;
   height: 36px;
-  background: url(https://d2d0m32kr3hci1.cloudfront.net/chat-british-shorthair-8958b38a1b5a06fc8175_160.jpg) no-repeat;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain;
   border-radius: 100px;
 
   &--smaller {

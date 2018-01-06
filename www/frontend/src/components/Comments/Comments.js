@@ -4,11 +4,18 @@ import './Comments.css';
 
 import Comment from './Comment';
 
-const Comments = () => {
+const Comments = (props) => {
   return (
     <div className="Comments">
-      <Comment/>
-      <Comment/>
+      {props.comments.map(
+        comment => (
+          <Comment
+            key={comment.id}
+            comment={comment.comment}
+            user={comment.user}
+            createdAt={comment.createdAt}/>
+        )
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './PostHeader.css';
 
@@ -17,11 +18,11 @@ class PostHeader extends React.PureComponent {
     return (
       <div className="PostHeader">
         <div className="PostHeader__left">
-          <Avatar/>
+          <Avatar src={this.props.avatar}/>
         </div>
         <div className="PostHeader__right">
-          <div className="PostHeader__user">Itchy</div>
-          <div className="PostHeader__date">Yesterday at 7:44 PM</div>
+          <div className="PostHeader__user">{this.props.userName}</div>
+          <div className="PostHeader__date">{this.props.createdAt}</div>
         </div>
 
         <a className="PostHeader__menu-btn"
@@ -55,5 +56,11 @@ class PostHeader extends React.PureComponent {
     this.toggleMenu();
   };
 }
+
+PostHeader.propTypes = {
+  userName: PropTypes.string,
+  avatar: PropTypes.string,
+  createdAt: PropTypes.string,
+};
 
 export default PostHeader;

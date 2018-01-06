@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import './Post.css';
 
-import PostImage from './PostImage';
 import PostHeader from './PostHeader';
 import Comments from '../Comments/Comments';
 import MessageArea from '../MessageArea/MessageArea';
+import PostContent from './PostContent';
 
 class Post extends React.PureComponent {
   componentDidMount() {
@@ -21,10 +21,14 @@ class Post extends React.PureComponent {
     return (
       <div className="Post"
            ref={el => (this.postEl = el)}>
-        <PostHeader/>
+        <PostHeader userName={this.props.user.firstName}
+                    avatar={this.props.user.avatar}
+                    createdAt={this.props.createdAt}
+        />
         <div className="Post__inner Post__inner--has-comments">
           <div className="Post__content">
-            <PostImage/>
+            <PostContent content={this.props.content}
+                         type={this.props.type}/>
           </div>
           <div className="Post__actions"
                ref={el => (this.actionsEl = el)}>
@@ -37,7 +41,7 @@ class Post extends React.PureComponent {
             </a>
           </div>
         </div>
-        <Comments/>
+        <Comments comments={this.props.comments}/>
         <MessageArea/>
       </div>
     )
@@ -63,22 +67,20 @@ class Post extends React.PureComponent {
 
 Post.defaultProps = {
   content: '',
-  data: {},
+  comments: [],
+  user: {},
   likesCount: 0,
   commentsCount: 0,
-  meta: {},
 };
 
 Post.propTypes = {
-  data: PropTypes.shape({
-    content: PropTypes.string,
-    type: PropTypes.oneOf(['status', 'image', 'video', 'vote']),
-    userId: PropTypes.string,
-    likesCount: PropTypes.number,
-    commentsCount: PropTypes.number,
-    date: PropTypes.date,
-    meta: PropTypes.object,
-  }),
+  content: PropTypes.string,
+  type: PropTypes.oneOf(['status', 'image', 'video', 'vote']),
+  user: PropTypes.object,
+  comments: PropTypes.array,
+  likesCount: PropTypes.number,
+  commentsCount: PropTypes.number,
+  createdAt: PropTypes.string,
 };
 
 export default Post;

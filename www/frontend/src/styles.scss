@@ -1,6 +1,7 @@
 @import "./_colors.scss";
 
 * {
+  box-sizing: border-box;
   &:focus {
     outline: none;
   }

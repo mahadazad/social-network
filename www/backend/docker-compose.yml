@@ -1,0 +1,49 @@
+version: "3"
+services:
+  web:
+    image: node:9
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./.env:/app/.env
+      - ./.babelrc:/app/.babelrc
+      - ./package.json:/app/package.json
+    command: /bin/bash -c "cd /app && npm install && npm start"
+    depends_on:
+      - redis
+      - mongo
+    env_file:
+        - ".env"
+    networks:
+      - webnet
+  nginx:
+    image: nginx
+    volumes:
+      - ./config.template:/etc/nginx/conf.d/config.template
+      - ./public:/public
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    depends_on:
+      - web
+    command: /bin/bash -c "cat < /etc/nginx/conf.d/config.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+#    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/config.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    networks:
+      - webnet
+  mongo:
+    image: mongo:latest
+    volumes:
+      - ./data/mongo/data/db:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - webnet
+  redis:
+    image: redis
+    networks:
+      - webnet
+networks:
+  webnet:
