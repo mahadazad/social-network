@@ -1,9 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 
 import './PostContent.css';
 
-const PostContent = (props) => {
+const renderImage = props => <img className="PostContent__image" alt={props.content} src={props.content} />;
+
+const renderVideo = props => <video className="PostContent__video" src={props.content} controls />;
+
+type PostContentProps = {
+  type: string,
+  content: string,
+};
+
+const PostContent = (props: PostContentProps) => {
   switch (props.type) {
     case 'image':
       return renderImage(props);
@@ -12,27 +21,6 @@ const PostContent = (props) => {
     default:
       return props.content;
   }
-};
-
-const renderImage = (props) => {
-  return (
-    <img className="PostContent__image"
-         alt={props.content}
-         src={props.content}/>
-  );
-};
-
-const renderVideo = (props) => {
-  return (
-    <video className="PostContent__video"
-           src={props.content}
-           controls/>
-  );
-};
-
-PostContent.propTypes = {
-  type: PropTypes.string,
-  content: PropTypes.string,
 };
 
 export default PostContent;

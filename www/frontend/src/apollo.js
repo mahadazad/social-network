@@ -1,3 +1,4 @@
+// @flow
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink, concat, split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
@@ -9,7 +10,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
       'X-Token': localStorage.getItem('token') || null,
-    }
+    },
   });
 
   return forward(operation);
@@ -36,7 +37,7 @@ const link = split(
     return kind === 'OperationDefinition' && operation === 'subscription';
   },
   wsLink,
-  httpLink,
+  httpLink
 );
 
 const client = new ApolloClient({

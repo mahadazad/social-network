@@ -1,13 +1,17 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import classnames from 'classnames';
 
 import './BorderButton.css';
 
-const BorderButton = ({className, ...props}) => {
-  return (
-    <button {...props}
-            className={classnames('BorderButton', className)}>{props.children}</button>
-  );
+type BorderButtonProps = {
+  className: string,
 };
+
+const BorderButton = ({ className, ...props }: BorderButtonProps) => (
+  <button {...props} className={classnames('BorderButton', className)}>
+    {props.children}
+  </button>
+);
 
 export default BorderButton;

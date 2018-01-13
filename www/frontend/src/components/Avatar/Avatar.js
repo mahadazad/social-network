@@ -1,30 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 import classnames from 'classnames';
-
-import './Avatar.css';
 
 import { DEFAULT_AVATR } from '../../constants';
 
-const Avatar = (props) => {
-  const classNames = classnames(
-    'Avatar',
-    props.size && `Avatar--${props.size}`,
-    props.className,
-  );
+import './Avatar.css';
 
+type AvatarProps = {
+  src: string,
+  size?: 'smaller',
+  className?: string,
+};
+
+const Avatar = (props: AvatarProps) => {
+  const classNames = classnames('Avatar', props.size && `Avatar--${props.size}`, props.className);
   const src = props.src || DEFAULT_AVATR;
 
   return (
-    <div style={{
-      backgroundImage: `url(${src})`
-    }}
-      className={classNames}/>
+    <div
+      style={{
+        backgroundImage: `url(${src})`,
+      }}
+      className={classNames}
+    />
   );
 };
 
-Avatar.propTypes = {
-  src: PropTypes.string,
+Avatar.defaultProps = {
+  size: null,
+  className: null,
 };
 
 export default Avatar;

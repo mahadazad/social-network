@@ -17,6 +17,7 @@
     "graphql": "^0.12.3",
     "graphql-tag": "^2.6.1",
     "isemail": "^3.0.0",
+    "jwt-decode": "^2.2.0",
     "node-sass-chokidar": "0.0.3",
     "normalize.css": "^7.0.0",
     "npm-run-all": "^4.1.2",
@@ -26,6 +27,7 @@
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
+    "react-transition-group": "^2.2.1",
     "subscriptions-transport-ws": "^0.9.4"
   },
   "scripts": {
@@ -36,6 +38,12 @@
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "update-types": "flow-typed install",
+    "flow": "flow"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.63.1",
+    "flow-typed": "^2.2.3"
   }
 }

@@ -16,6 +16,20 @@
       border-bottom-right-radius: 0; }
   .Post__content {
     padding: 2px 0 10px 0; }
+  .Post__liked-exit {
+    transform: scale(1); }
+    .Post__liked-exit-active {
+      transform: scale(0);
+      transition: all 200ms; }
+  .Post__likes-wrap {
+    width: 96%;
+    text-align: right;
+    margin: 0 auto;
+    padding: 15px 5px;
+    border-top: 1px solid #E7ECF4; }
+  .Post__likes {
+    margin-left: 3px;
+    font-size: 0.8em; }
   .Post__actions {
     display: flex;
     flex-direction: column;
@@ -26,20 +40,3 @@
     color: #95949B;
     font-size: 1.3em;
     transition: all 50ms; }
-  .Post__action {
-    margin: 0 5px 5px 0;
-    cursor: pointer; }
-    .Post__action:hover .Post__action-icon {
-      background: #E16E54; }
-  .Post__action-icon {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    background: #9B9FBC;
-    border-radius: 100%;
-    font-size: 1em;
-    color: #fff;
-    z-index: 1;
-    transition: all 300ms; }

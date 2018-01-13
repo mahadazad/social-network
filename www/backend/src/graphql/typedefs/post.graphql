@@ -6,7 +6,12 @@ type Post {
     comments: [Comment!]!
     likesCount: Int
     commentsCount: Int
+    hasLiked: Boolean
     createdAt: String
+}
+
+type Mutation {
+    likePost(postId: String!): Int
 }
 
 type Query {

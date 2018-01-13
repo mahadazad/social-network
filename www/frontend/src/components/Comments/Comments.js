@@ -1,23 +1,20 @@
-import React from 'react';
-
-import './Comments.css';
+// @flow
+import * as React from 'react';
 
 import Comment from './Comment';
 
-const Comments = (props) => {
-  return (
-    <div className="Comments">
-      {props.comments.map(
-        comment => (
-          <Comment
-            key={comment.id}
-            comment={comment.comment}
-            user={comment.user}
-            createdAt={comment.createdAt}/>
-        )
-      )}
-    </div>
-  );
+import './Comments.css';
+
+type CommentsProps = {
+  comments: Array<Object>,
 };
+
+const Comments = (props: CommentsProps) => (
+  <div className="Comments">
+    {props.comments.map(comment => (
+      <Comment key={comment.id} comment={comment.comment} user={comment.user} createdAt={comment.createdAt} />
+    ))}
+  </div>
+);
 
 export default Comments;

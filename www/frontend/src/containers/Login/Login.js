@@ -1,23 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import { wsLink } from '../../apollo';
-import { default as LoginComponent } from '../../components/Login/Login';
-
+import LoginComponent from '../../components/Login/Login';
 
 class Login extends React.PureComponent {
   state = {
     error: '',
   };
-
-  render() {
-    return (
-      <LoginComponent onSubmit={this.onSubmit}
-                      error={this.state.error}/>
-    );
-  }
 
   onSubmit = async ({ email, password }) => {
     const response = await this.props.login(email, password);
@@ -32,31 +24,33 @@ class Login extends React.PureComponent {
 
     this.props.history.push('/home');
   };
+
+  render() {
+    return <LoginComponent onSubmit={this.onSubmit} error={this.state.error} />;
+  }
 }
 
 const loginQuery = gql`
-    mutation LoginQuery($email: String!, $password: String!) {
-        loginUser(email: $email, password: $password) {
-            token
-            error
-        }
+  mutation LoginQuery($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
+      error
     }
+  }
 `;
 
 export default graphql(loginQuery, {
   name: 'login',
-  props: (props) => {
-    return {
-      login: async (email, password) => {
-        const response = await props.login({
-          variables: {
-            email,
-            password,
-          },
-        });
+  props: props => ({
+    login: async (email, password) => {
+      const response = await props.login({
+        variables: {
+          email,
+          password,
+        },
+      });
 
-        return response.data.loginUser;
-      },
-    }
-  },
+      return response.data.loginUser;
+    },
+  }),
 })(withRouter(Login));

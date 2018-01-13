@@ -1,26 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 import classnames from 'classnames';
 
 import './Sidebar.css';
 
-const Sidebar = (props) => {
-  return (
-    <div className={classnames({
+type SidebarProps = {
+  position: 'left' | 'right',
+  children: React.Node,
+};
+
+const Sidebar = (props: SidebarProps) => (
+  <div
+    className={classnames({
       'Sidebar--left': props.position === 'left',
       'Sidebar--right': props.position === 'right',
-    })}>
-      {props.children}
-    </div>
-  );
-};
-
-Sidebar.defaultProps = {
-  position: 'left',
-};
-
-Sidebar.propTypes = {
-  position: PropTypes.oneOf(['left', 'right']),
-};
+    })}
+  >
+    {props.children}
+  </div>
+);
 
 export default Sidebar;

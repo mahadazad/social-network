@@ -1,38 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-
-import './SidebarUsers.css';
 
 import Panel from '../Panel/Panel';
 import Avatar from '../Avatar/Avatar';
 import Tooltip from '../Tooltip/Tooltip';
 
-const SidebarUsers = (props) => {
-  return (
-    <div className="SidebarUsers">
-      <Panel className="SidebarUsers__list"
-             title={props.title}
-             padded>
-        {props.users.map(user =>
-          <Tooltip key={user.id}
-                   title={`${user.firstName} ${user.lastName}`}>
-            <a className="SidebarUsers__user"
-               onClick={() => {
-                 props.history.push(`/profile/${user.id}`);
-               }}>
-              <Avatar src={user.avatar}/>
-            </a>
-          </Tooltip>
-        )}
-      </Panel>
-    </div>
-  );
+import './SidebarUsers.css';
+
+type SidebarUsersProps = {
+  title: string,
+  users: Array<Object>,
 };
 
-SidebarUsers.propTypes = {
-  title: PropTypes.string,
-  users: PropTypes.array,
-};
+const SidebarUsers = (props: SidebarUsersProps) => (
+  <div className="SidebarUsers">
+    <Panel className="SidebarUsers__list" title={props.title} padded>
+      {props.users.map(user => (
+        <Tooltip key={user.id} title={`${user.firstName} ${user.lastName}`}>
+          <a
+            className="SidebarUsers__user"
+            onClick={() => {
+              props.history.push(`/profile/${user.id}`);
+            }}
+          >
+            <Avatar src={user.avatar} />
+          </a>
+        </Tooltip>
+      ))}
+    </Panel>
+  </div>
+);
 
 export default withRouter(SidebarUsers);

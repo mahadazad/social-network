@@ -6,6 +6,15 @@ type Comment {
     createdAt: String
 }
 
+type SendCommentResponse {
+    comment: Comment!
+    user: User!
+}
+
 type Query {
     comments(postId: String, cursor: String, limit: Int): [Comment!]!
+}
+
+type Mutation {
+    sendComment(postId: String!, comment: String!): SendCommentResponse
 }

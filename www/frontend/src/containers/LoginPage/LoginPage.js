@@ -1,15 +1,13 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 
 import './LoginPage.css';
 import Login from '../Login/Login';
 
-
-const LoginPage = () => {
-  return (
-    <div>
-      <Login/>
-    </div>
-  );
-};
+const LoginPage = () => (
+  <div>
+    <Login />
+  </div>
+);
 
 export default LoginPage;

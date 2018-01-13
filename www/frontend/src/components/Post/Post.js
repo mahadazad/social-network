@@ -1,14 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import './Post.css';
+// @flow
+import * as React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import PostHeader from './PostHeader';
 import Comments from '../Comments/Comments';
-import MessageArea from '../MessageArea/MessageArea';
 import PostContent from './PostContent';
+import CommentArea from '../../containers/CommentArea/CommentArea';
+import PostAction from './PostAction';
+import PostLikeAction from '../../containers/PostLikeAction/PostLikeAction';
+import { scrollToElement } from '../../utils';
 
-class Post extends React.PureComponent {
+import './Post.css';
+
+type PostProps = {
+  postId: string,
+  content: string,
+  type: 'status' | 'image' | 'video' | 'vote',
+  user: Object,
+  comments: Array<Object>,
+  hasLiked: boolean,
+  likesCount: number,
+  commentsCount: number,
+  createdAt: string,
+  updateComments: Function,
+  onLike: Function,
+};
+
+class Post extends React.PureComponent<PostProps> {
+  static defaultProps = {
+    comments: [],
+    likesCount: 0,
+    commentsCount: 0,
+    hasLiked: false,
+    updateComments: null,
+    onLike: null,
+  };
+
   componentDidMount() {
     window.addEventListener('scroll', this.scrollActions);
   }
@@ -17,35 +44,13 @@ class Post extends React.PureComponent {
     window.removeEventListener('scroll', this.scrollActions);
   }
 
-  render() {
-    return (
-      <div className="Post"
-           ref={el => (this.postEl = el)}>
-        <PostHeader userName={this.props.user.firstName}
-                    avatar={this.props.user.avatar}
-                    createdAt={this.props.createdAt}
-        />
-        <div className="Post__inner Post__inner--has-comments">
-          <div className="Post__content">
-            <PostContent content={this.props.content}
-                         type={this.props.type}/>
-          </div>
-          <div className="Post__actions"
-               ref={el => (this.actionsEl = el)}>
-            <a className="Post__action">
-              <span className="Post__action-icon fa fa-comment-o"/>
-            </a>
+  onEditorCreate = (editor: any) => {
+    this.editor = editor;
+  };
 
-            <a className="Post__action">
-              <span className="Post__action-icon fa fa-thumbs-o-up"/>
-            </a>
-          </div>
-        </div>
-        <Comments comments={this.props.comments}/>
-        <MessageArea/>
-      </div>
-    )
-  }
+  onCommentIconClick = () => {
+    scrollToElement(this.commentEditorWrapEl).then(() => this.editor.focus());
+  };
 
   scrollActions = () => {
     const windowScrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -63,24 +68,64 @@ class Post extends React.PureComponent {
       this.actionsEl.style.top = `${minY}px`;
     }
   };
+
+  editor: any;
+  actionsEl: HTMLDivElement;
+  postEl: HTMLDivElement;
+  commentEditorWrapEl: HTMLElement;
+
+  render() {
+    return (
+      <div
+        className="Post"
+        ref={el => {
+          this.postEl = el;
+        }}
+      >
+        <PostHeader
+          userName={this.props.user.firstName}
+          avatar={this.props.user.avatar}
+          createdAt={this.props.createdAt}
+        />
+        <div className="Post__inner Post__inner--has-comments">
+          <div className="Post__content">
+            <PostContent content={this.props.content} type={this.props.type} />
+          </div>
+          <div
+            className="Post__actions"
+            ref={el => {
+              this.actionsEl = el;
+            }}
+          >
+            <PostAction icon="comment-o" onClick={this.onCommentIconClick} />
+            <TransitionGroup>
+              {!this.props.hasLiked && (
+                <CSSTransition timeout={200} classNames="Post__liked">
+                  <PostLikeAction postId={this.props.postId} onLike={this.props.onLike} />
+                </CSSTransition>
+              )}
+            </TransitionGroup>
+          </div>
+        </div>
+        <div className="Post__likes-wrap">
+          <span className="fa fa-thumbs-up" />
+          <span className="Post__likes">{this.props.likesCount}</span>
+        </div>
+        <Comments comments={this.props.comments} />
+        <div
+          ref={el => {
+            this.commentEditorWrapEl = el;
+          }}
+        >
+          <CommentArea
+            postId={this.props.postId}
+            update={this.props.updateComments}
+            onEditorCreate={this.onEditorCreate}
+          />
+        </div>
+      </div>
+    );
+  }
 }
-
-Post.defaultProps = {
-  content: '',
-  comments: [],
-  user: {},
-  likesCount: 0,
-  commentsCount: 0,
-};
-
-Post.propTypes = {
-  content: PropTypes.string,
-  type: PropTypes.oneOf(['status', 'image', 'video', 'vote']),
-  user: PropTypes.object,
-  comments: PropTypes.array,
-  likesCount: PropTypes.number,
-  commentsCount: PropTypes.number,
-  createdAt: PropTypes.string,
-};
 
 export default Post;
