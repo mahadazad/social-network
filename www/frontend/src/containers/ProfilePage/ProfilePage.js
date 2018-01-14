@@ -12,7 +12,7 @@ import ProfileHeader from '../../components/ProfileHeader/ProfileHeader';
 import StatusArea from '../../components/StatusArea/StatusArea';
 import Posts from '../Posts/Posts';
 
-import './ProfilePage.css';
+import './ProfilePage.scss';
 
 type ProfilePageProps = {
   subscribeToChangeFollow: Function,
@@ -20,7 +20,17 @@ type ProfilePageProps = {
   profileData: Object,
 };
 
-class ProfilePage extends React.Component<ProfilePageProps> {
+type ProfilePageState = {
+  isCurrentUser: boolean,
+  isFollowed: boolean,
+};
+
+class ProfilePage extends React.Component<ProfilePageProps, ProfilePageState> {
+  state = {
+    isCurrentUser: false,
+    isFollowed: false,
+  };
+
   componentDidMount() {
     this.props.subscribeToChangeFollow();
   }
@@ -67,7 +77,7 @@ class ProfilePage extends React.Component<ProfilePageProps> {
 
     return (
       <Fragment>
-        <Sidebar>
+        <Sidebar position="left">
           <SidebarAbout />
           <SidebarUsers title="Following" users={followings} />
         </Sidebar>

@@ -1,36 +1,54 @@
 // @flow
-import React, { Fragment } from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-import './Tooltip.css';
+import './Tooltip.scss';
 
 type TooltipProps = {
   title: string,
+  children: React.Node,
 };
 
-class Tooltip extends React.PureComponent<TooltipPropso> {
+class Tooltip extends React.PureComponent<TooltipProps> {
   componentDidMount() {
-    this.el.addEventListener('mouseover', this.onMouseOver);
-    this.el.addEventListener('mouseout', this.onMouseOut);
+    const el = this.el;
+    if (!el) {
+      return;
+    }
+    el.addEventListener('mouseover', this.onMouseOver);
+    el.addEventListener('mouseout', this.onMouseOut);
   }
 
   componentWillUnmount() {
-    this.el.removeEventListener('mouseover', this.onMouseOver);
-    this.el.removeEventListener('mouseout', this.onMouseOut);
+    const el = this.el;
+    if (!el) {
+      return;
+    }
+    el.removeEventListener('mouseover', this.onMouseOver);
+    el.removeEventListener('mouseout', this.onMouseOut);
   }
 
   onMouseOver = () => {
-    this.tooltip.innerText = this.props.title;
-    this.tooltip.style.top = `${this.el.offsetTop + this.el.offsetHeight + 3}px`;
-    this.tooltip.style.left = `${this.el.offsetLeft + this.el.offsetWidth / 2 - this.tooltip.offsetWidth / 2}px`;
-    this.tooltip.style.opacity = 1;
+    const tooltip = this.tooltip;
+    const el = this.el;
+    if (!tooltip || !el) {
+      return;
+    }
+    tooltip.innerText = this.props.title;
+    tooltip.style.top = `${el.offsetTop + el.offsetHeight + 3}px`;
+    tooltip.style.left = `${el.offsetLeft + el.offsetWidth / 2 - tooltip.offsetWidth / 2}px`;
+    tooltip.style.opacity = '1';
   };
 
   onMouseOut = () => {
-    this.tooltip.style.opacity = 0;
+    if (!this.tooltip) {
+      return;
+    }
+    this.tooltip.style.opacity = '0';
   };
 
-  el: HTMLElement;
+  el: ?HTMLElement;
+  tooltip: ?HTMLDivElement;
 
   render() {
     const tooltip = ReactDOM.createPortal(
@@ -42,11 +60,12 @@ class Tooltip extends React.PureComponent<TooltipPropso> {
       >
         {this.props.title}
       </div>,
+      // $FlowFixMe
       document.body
     );
 
     const component = (
-      <Fragment>
+      <React.Fragment>
         {tooltip}
         {React.Children.map(this.props.children, child =>
           React.cloneElement(child, {
@@ -59,7 +78,7 @@ class Tooltip extends React.PureComponent<TooltipPropso> {
             },
           })
         )}
-      </Fragment>
+      </React.Fragment>
     );
 
     return component;

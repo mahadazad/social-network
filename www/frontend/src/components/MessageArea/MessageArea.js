@@ -5,17 +5,17 @@ import React, { Component } from 'react';
 import Quill from 'quill';
 import classnames from 'classnames';
 
-import EmojiPicker from '../EmojiPicker/EmojiPicker';
+import EmojiPicker, { type Emoji } from '../EmojiPicker/EmojiPicker';
 
-import './MessageArea.css';
+import './MessageArea.scss';
 
 type MessageAreaProps = {
-  className?: string,
+  className?: ?string,
   onEnter?: Function,
   onTextChange?: Function,
   onFocusChange?: Function,
   onCreate?: Function,
-  placeholder?: string,
+  placeholder?: ?string,
 };
 
 type MessageAreaState = {
@@ -71,8 +71,9 @@ class MessageArea extends Component<MessageAreaProps, MessageAreaState> {
   }
 
   onTextChange = () => {
-    if (this.props.onTextChange) {
-      this.props.onTextChange(this.editor.getText());
+    const { onTextChange } = this.props;
+    if (onTextChange) {
+      onTextChange(this.editor.getText());
     }
   };
 
@@ -92,10 +93,14 @@ class MessageArea extends Component<MessageAreaProps, MessageAreaState> {
     this.lastFocusStatus = currentFocusStatus;
   };
 
-  onEmojiPickerMount = picker => {
+  onEmojiPickerMount = (picker: HTMLElement) => {
+    if (!this.smileEl) {
+      return;
+    }
+
     const rect = this.smileEl.getBoundingClientRect();
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || (document.documentElement && document.documentElement.scrollLeft) || 0;
+    const scrollTop = window.pageYOffset || (document.documentElement && document.documentElement.scrollTop) || 0;
     const top = rect.top + scrollTop - 5;
     const left = rect.left + scrollLeft - picker.offsetWidth + 24;
 
@@ -103,7 +108,7 @@ class MessageArea extends Component<MessageAreaProps, MessageAreaState> {
     picker.style.left = `${left}px`;
   };
 
-  onEmojiClick = emoji => {
+  onEmojiClick = (emoji: Emoji) => {
     const range = this.editor.getSelection(true);
     const emojiText = ` :${emoji.id}: `;
     this.editor.insertText(range.index, emojiText);
@@ -123,7 +128,9 @@ class MessageArea extends Component<MessageAreaProps, MessageAreaState> {
     });
   };
 
-  editor = null;
+  el: ?HTMLElement;
+  smileEl: ?HTMLElement;
+  editor: any;
   lastFocusStatus = false;
 
   render() {

@@ -2,13 +2,15 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import './Input.css';
+import './Input.scss';
 
 type InputProps = {
   value: string,
-  onChange: Function,
-  onFocus: Function,
-  onBlur: Function,
+  className?: string,
+  placeholder?: string,
+  onChange?: Function,
+  onFocus?: Function,
+  onBlur?: Function,
 };
 
 type InputState = {

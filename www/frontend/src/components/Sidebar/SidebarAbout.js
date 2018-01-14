@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Panel from '../Panel/Panel';
 
-import './SidebarAbout.css';
+import './SidebarAbout.scss';
 
 const SidebarAbout = () => (
   <Panel title="Profile Info" padded>

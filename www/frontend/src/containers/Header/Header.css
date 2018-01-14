@@ -1,9 +1,0 @@
-.Header {
-  display: block;
-  height: 80px;
-  background: #404255;
-  color: #fff; }
-  .Header__container {
-    display: flex;
-    align-items: center;
-    height: 100%; }

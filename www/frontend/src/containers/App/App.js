@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import './App.css';
+import './App.scss';
 
 import Header from '../Header/Header';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import LoginPage from '../LoginPage/LoginPage';
 
-class App extends Component<null> {
+class App extends Component<{}> {
   render() {
     return [
       <Header key="header" />,

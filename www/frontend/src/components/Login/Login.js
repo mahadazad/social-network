@@ -6,7 +6,7 @@ import Input from '../Input/Input';
 import Panel from '../Panel/Panel';
 import Button from '../Button/Button';
 
-import './Login.css';
+import './Login.scss';
 
 type LoginProps = {
   error: string,

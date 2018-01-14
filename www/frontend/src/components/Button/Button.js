@@ -2,10 +2,11 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import './Button.css';
+import './Button.scss';
 
 type ButtonProps = {
-  className: string,
+  className?: string,
+  children: React.Node,
 };
 
 const Button = ({ className, ...props }: ButtonProps) => (

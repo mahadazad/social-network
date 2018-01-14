@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import './PostContent.css';
+import './PostContent.scss';
 
 const renderImage = props => <img className="PostContent__image" alt={props.content} src={props.content} />;
 

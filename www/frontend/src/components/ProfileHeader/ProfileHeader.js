@@ -5,7 +5,7 @@ import { DEFAULT_AVATR } from '../../constants';
 
 import BorderButton from '../Button/BorderButton';
 
-import './ProfileHeader.css';
+import './ProfileHeader.scss';
 
 const renderFollowButton = ({ isCurrentUser, isFollowed, onFollow, onUnFollow }) => {
   if (!isCurrentUser) {

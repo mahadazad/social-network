@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import './LoginPage.css';
+import './LoginPage.scss';
 import Login from '../Login/Login';
 
 const LoginPage = () => (

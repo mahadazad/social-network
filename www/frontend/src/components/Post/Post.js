@@ -10,7 +10,7 @@ import PostAction from './PostAction';
 import PostLikeAction from '../../containers/PostLikeAction/PostLikeAction';
 import { scrollToElement } from '../../utils';
 
-import './Post.css';
+import './Post.scss';
 
 type PostProps = {
   postId: string,
@@ -49,11 +49,18 @@ class Post extends React.PureComponent<PostProps> {
   };
 
   onCommentIconClick = () => {
+    if (!this.commentEditorWrapEl) {
+      return;
+    }
     scrollToElement(this.commentEditorWrapEl).then(() => this.editor.focus());
   };
 
   scrollActions = () => {
-    const windowScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    if (!this.postEl || !this.actionsEl) {
+      return;
+    }
+
+    const windowScrollY = window.pageYOffset || (document.documentElement && document.documentElement.scrollTop) || 0;
     const postTop = this.postEl.offsetTop;
     const postHeight = this.postEl.offsetHeight;
     const postBottomY = postTop + postHeight - 160;
@@ -70,9 +77,9 @@ class Post extends React.PureComponent<PostProps> {
   };
 
   editor: any;
-  actionsEl: HTMLDivElement;
-  postEl: HTMLDivElement;
-  commentEditorWrapEl: HTMLElement;
+  actionsEl: ?HTMLDivElement;
+  postEl: ?HTMLDivElement;
+  commentEditorWrapEl: ?HTMLElement;
 
   render() {
     return (

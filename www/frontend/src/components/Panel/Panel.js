@@ -2,15 +2,15 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import './Panel.css';
+import './Panel.scss';
 
 type PanelProps = {
   title: string,
-  header: React.Node,
-  className: string,
-  padded: boolean,
+  header?: React.Node,
+  className?: string,
+  padded?: boolean,
   children: React.Node,
-  footer: React.Node,
+  footer?: React.Node,
 };
 
 const Panel = (props: PanelProps) => (
@@ -20,10 +20,7 @@ const Panel = (props: PanelProps) => (
       {props.header}
     </div>
     <div
-      className={classnames({
-        'Panel--padded': props.padded,
-        [props.className]: props.className,
-      })}
+      className={classnames({ 'Panel--padded': props.padded }, props.className)}
     >
       {props.children}
     </div>

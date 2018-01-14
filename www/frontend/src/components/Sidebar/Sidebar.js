@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import './Sidebar.css';
+import './Sidebar.scss';
 
 type SidebarProps = {
   position: 'left' | 'right',

@@ -1,16 +1,17 @@
 // @flow
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, type RouterHistory } from 'react-router-dom';
 
 import Panel from '../Panel/Panel';
 import Avatar from '../Avatar/Avatar';
 import Tooltip from '../Tooltip/Tooltip';
 
-import './SidebarUsers.css';
+import './SidebarUsers.scss';
 
 type SidebarUsersProps = {
   title: string,
   users: Array<Object>,
+  history: RouterHistory,
 };
 
 const SidebarUsers = (props: SidebarUsersProps) => (

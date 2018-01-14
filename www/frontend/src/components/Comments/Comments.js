@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Comment from './Comment';
 
-import './Comments.css';
+import './Comments.scss';
 
 type CommentsProps = {
   comments: Array<Object>,

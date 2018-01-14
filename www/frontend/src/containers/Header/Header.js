@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import './Header.css';
+import './Header.scss';
 
 const Header = () => (
   <header className="Header">

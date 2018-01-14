@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import './PostAction.css';
+import './PostAction.scss';
 
 type PostActionProps = {
   icon: string,

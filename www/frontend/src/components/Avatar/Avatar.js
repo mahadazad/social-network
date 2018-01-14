@@ -4,12 +4,12 @@ import classnames from 'classnames';
 
 import { DEFAULT_AVATR } from '../../constants';
 
-import './Avatar.css';
+import './Avatar.scss';
 
 type AvatarProps = {
   src: string,
-  size?: 'smaller',
-  className?: string,
+  size: ?'smaller',
+  className: ?string,
 };
 
 const Avatar = (props: AvatarProps) => {

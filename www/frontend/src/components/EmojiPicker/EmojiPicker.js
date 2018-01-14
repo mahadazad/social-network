@@ -6,14 +6,24 @@ import { Picker } from 'emoji-mart';
 import emojiSet from 'emoji-datasource-apple/img/apple/sheets-256/64.png';
 import 'emoji-mart/css/emoji-mart.css';
 
-import './EmojiPicker.css';
+import './EmojiPicker.scss';
 
 const ESC_KEY = 27;
 
 type EmojiPickerProps = {
-  onMount: Function,
+  onMount?: Function,
   onEmojiClick: Function,
-  onOverlayClick: Function,
+  onOverlayClick?: Function,
+};
+
+export type Emoji = {
+  colons: string,
+  emoticons: Array<string>,
+  id: string,
+  name: string,
+  native: string,
+  skin: ?string,
+  unified: string,
 };
 
 class EmojiPicker extends React.Component<EmojiPickerProps> {
@@ -29,7 +39,7 @@ class EmojiPicker extends React.Component<EmojiPickerProps> {
     document.removeEventListener('keydown', this.onKeyDown);
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e: KeyboardEvent) => {
     if (e.keyCode === ESC_KEY) {
       this.onOverlayClick();
     }
@@ -41,15 +51,21 @@ class EmojiPicker extends React.Component<EmojiPickerProps> {
     }
   };
 
-  onEmojiClick = emoji => {
+  onEmojiClick = (emoji: Emoji) => {
     if (this.props.onEmojiClick) {
       this.props.onEmojiClick(emoji);
     }
   };
 
-  el = null;
+  el: any;
 
   render() {
+    const bodyEl = document.body;
+
+    if (!bodyEl) {
+      return null;
+    }
+
     return ReactDOM.createPortal(
       [
         <div
@@ -63,7 +79,7 @@ class EmojiPicker extends React.Component<EmojiPickerProps> {
         </div>,
         <div key="overlay" className="EmojiPicker__overlay" onClick={this.onOverlayClick} />,
       ],
-      document.body
+      bodyEl
     );
   }
 }

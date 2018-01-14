@@ -3,7 +3,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-import './CommentArea.css';
+import './CommentArea.scss';
 
 import MessageArea from '../../components/MessageArea/MessageArea';
 
@@ -11,6 +11,7 @@ type CommentAreaProps = {
   postId: string,
   update: Function,
   onEditorCreate: Function,
+  sendComment: Function,
 };
 
 class CommentArea extends React.PureComponent<CommentAreaProps> {
@@ -19,7 +20,7 @@ class CommentArea extends React.PureComponent<CommentAreaProps> {
     onEditorCreate: null,
   };
 
-  onCreate = messageArea => {
+  onCreate = (messageArea: MessageArea) => {
     this.messageArea = messageArea;
 
     if (this.props.onEditorCreate) {
@@ -32,7 +33,7 @@ class CommentArea extends React.PureComponent<CommentAreaProps> {
     this.props.sendComment(this.props.postId, comment);
   };
 
-  messageArea = null;
+  messageArea: MessageArea;
 
   render() {
     return (

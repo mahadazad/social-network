@@ -4,7 +4,7 @@ import * as React from 'react';
 import Avatar from '../Avatar/Avatar';
 import PostHeaderMenu from './PostHeaderMenu';
 
-import './PostHeader.css';
+import './PostHeader.scss';
 
 type PostHeaderProps = {
   userName: string,
@@ -21,14 +21,14 @@ class PostHeader extends React.PureComponent<PostHeaderProps, PostHeaderState> {
     isMenuVisible: false,
   };
 
-  onMenuMount = (el: HTMLElement) => {
+  onMenuMount = (el: any) => {
     el.style.top = `${this.lastY}px`;
     el.style.left = `${this.lastX}px`;
   };
 
-  onMenuBtnClick = (e: HTMLElement) => {
-    const winX = window.pageXOffset || document.documentElement.scrollLeft;
-    const winY = window.pageYOffset || document.documentElement.scrollTop;
+  onMenuBtnClick = (e: any) => {
+    const winX = window.pageXOffset || (document.documentElement && document.documentElement.scrollLeft) || 0;
+    const winY = window.pageYOffset || (document.documentElement && document.documentElement.scrollTop) || 0;
     this.lastX = winX + e.clientX;
     this.lastY = winY + e.clientY;
     this.toggleMenu();

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-import './PostHeaderMenu.css';
+import './PostHeaderMenu.scss';
 
 const ESC_KEY = 27;
 
@@ -20,7 +20,7 @@ class PostHeaderMenu extends React.PureComponent<PostHeaderMenuProps> {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e: KeyboardEvent) => {
     if (e.keyCode === ESC_KEY) {
       this.close();
     }
@@ -32,7 +32,7 @@ class PostHeaderMenu extends React.PureComponent<PostHeaderMenuProps> {
     }
   };
 
-  el: HTMLElement;
+  el: ?HTMLElement;
 
   render() {
     return ReactDOM.createPortal(
@@ -49,6 +49,7 @@ class PostHeaderMenu extends React.PureComponent<PostHeaderMenuProps> {
         </div>,
         <div key="PostHeaderMenu__overlay" className="PostHeaderMenu__overlay" onClick={this.close} />,
       ],
+      // $FlowFixMe
       document.body
     );
   }

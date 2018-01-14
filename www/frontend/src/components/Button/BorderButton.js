@@ -2,10 +2,11 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import './BorderButton.css';
+import './BorderButton.scss';
 
 type BorderButtonProps = {
   className: string,
+  children: React.Node,
 };
 
 const BorderButton = ({ className, ...props }: BorderButtonProps) => (

@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Avatar from '../Avatar/Avatar';
 
-import './Comment.css';
+import './Comment.scss';
 
 type CommentProps = {
   comment: string,

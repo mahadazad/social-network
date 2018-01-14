@@ -1,8 +1,0 @@
-.SidebarUsers__list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 27px 20px; }
-
-.SidebarUsers__user {
-  margin: 3px;
-  cursor: pointer; }

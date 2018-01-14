@@ -6,18 +6,18 @@ import Button from '../../components/Button/Button';
 
 import Panel from '../Panel/Panel';
 
-import './StatusArea.css';
+import './StatusArea.scss';
 
 type StatusAreaState = {
-  isFocused: boolean,
+  isFocused?: boolean,
 };
 
-class StatusArea extends React.PureComponent<null, StatusAreaState> {
+class StatusArea extends React.PureComponent<{}, StatusAreaState> {
   state = {
     isFocused: false,
   };
 
-  onFocusChange = isFocused => {
+  onFocusChange = (isFocused: boolean) => {
     this.setState({ isFocused });
   };
 
