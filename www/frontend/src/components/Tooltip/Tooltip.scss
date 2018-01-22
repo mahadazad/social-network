@@ -1,4 +1,4 @@
-@import "../../_colors.scss";
+@import "colors.scss";
 
 .Tooltip {
   position: absolute;
@@ -8,4 +8,6 @@
   color: $tooltip-font-color;
   opacity: 0;
   border-radius: 3px;
+  pointer-events: none;
+  z-index: 10;
 }

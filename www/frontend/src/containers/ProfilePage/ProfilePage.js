@@ -13,6 +13,7 @@ import StatusArea from '../../components/StatusArea/StatusArea';
 import Posts from '../Posts/Posts';
 
 import './ProfilePage.scss';
+import MemeMaker from '../../components/MemeMaker/MemeMaker';
 
 type ProfilePageProps = {
   subscribeToChangeFollow: Function,
@@ -102,6 +103,7 @@ class ProfilePage extends React.Component<ProfilePageProps, ProfilePageState> {
         <Sidebar position="right">
           <SidebarUsers title="Followers" users={followers} />
         </Sidebar>
+        <MemeMaker />
       </Fragment>
     );
   }

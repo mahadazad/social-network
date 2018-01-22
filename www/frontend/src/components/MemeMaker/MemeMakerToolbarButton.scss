@@ -1,0 +1,31 @@
+.MemeMakerToolbarButton {
+  &__tooltip {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 0;
+    margin: 3px;
+    width: 24px;
+    height: 24px;
+    font-size: 1em;
+    cursor: pointer;
+
+    &:hover:not(&--active) {
+      border-color: #F5C243;
+      background: lighten(#F5C243, 33%);
+    }
+
+    &--active {
+      border: 1px solid #4AA6ED;
+      background: lighten(#4AA6ED, 33%);
+    }
+  }
+}

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -38,7 +39,7 @@ const stats = {
   },
 };
 
-module.exports = function(env) {
+module.exports = function (env) {
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
 
@@ -86,6 +87,13 @@ module.exports = function(env) {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async',
     }),
+
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(sourcePath, 'assets'),
+        to: path.resolve(buildDirectory, 'assets'),
+      },
+    ]),
   ];
 
   if (isProd) {

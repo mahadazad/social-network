@@ -25,3 +25,7 @@ declare module 'emoji-datasource-apple/img/apple/sheets-256/64.png' {
 declare module 'emoji-mart/css/emoji-mart.css' {
   declare module.exports: any;
 }
+
+declare module 'rc-color-picker/assets/index.css' {
+  declare module.exports: any;
+}

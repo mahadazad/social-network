@@ -18,7 +18,7 @@ const SidebarUsers = (props: SidebarUsersProps) => (
   <div className="SidebarUsers">
     <Panel className="SidebarUsers__list" title={props.title} padded>
       {props.users.map(user => (
-        <Tooltip key={user.id} title={`${user.firstName} ${user.lastName}`}>
+        <Tooltip position="bottom" key={user.id} title={`${user.firstName} ${user.lastName}`}>
           <a
             className="SidebarUsers__user"
             onClick={() => {

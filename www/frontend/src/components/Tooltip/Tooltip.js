@@ -1,17 +1,32 @@
 // @flow
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 
 import './Tooltip.scss';
 
 type TooltipProps = {
   title: string,
   children: React.Node,
+  position?: ?'top' | 'bottom',
+  className?: string,
 };
 
-class Tooltip extends React.PureComponent<TooltipProps> {
+type TooltipState = {
+  isHover: boolean,
+};
+
+class Tooltip extends React.PureComponent<TooltipProps, TooltipState> {
+  static defaultProps = {
+    position: 'top',
+  };
+
+  state = {
+    isHover: false,
+  };
+
   componentDidMount() {
-    const el = this.el;
+    const { el } = this;
     if (!el) {
       return;
     }
@@ -20,7 +35,7 @@ class Tooltip extends React.PureComponent<TooltipProps> {
   }
 
   componentWillUnmount() {
-    const el = this.el;
+    const { el } = this;
     if (!el) {
       return;
     }
@@ -29,40 +44,61 @@ class Tooltip extends React.PureComponent<TooltipProps> {
   }
 
   onMouseOver = () => {
-    const tooltip = this.tooltip;
-    const el = this.el;
-    if (!tooltip || !el) {
-      return;
-    }
-    tooltip.innerText = this.props.title;
-    tooltip.style.top = `${el.offsetTop + el.offsetHeight + 3}px`;
-    tooltip.style.left = `${el.offsetLeft + el.offsetWidth / 2 - tooltip.offsetWidth / 2}px`;
-    tooltip.style.opacity = '1';
+    this.setState({ isHover: true });
+    this.placeTooltip();
   };
 
   onMouseOut = () => {
+    this.setState({ isHover: false });
+
     if (!this.tooltip) {
       return;
     }
     this.tooltip.style.opacity = '0';
+    window.removeEventListener('scroll', this.placeTooltip);
+  };
+
+  placeTooltip = () => {
+    const { tooltip, el, props: { position } } = this;
+    if (!tooltip || !el) {
+      return;
+    }
+
+    const { width, height, top, left } = el.getBoundingClientRect();
+    const { width: tooltipWidth, height: tooltipHeight } = tooltip.getBoundingClientRect();
+
+    let offset = top + height + 2;
+    if (position === 'top') {
+      offset = top - tooltipHeight - 2;
+    }
+
+    tooltip.innerText = this.props.title;
+    tooltip.style.top = `${window.pageYOffset + offset}px`;
+    tooltip.style.left = `${left + width / 2 - tooltipWidth / 2}px`;
+    tooltip.style.opacity = '1';
+
+    window.addEventListener('scroll', this.placeTooltip);
   };
 
   el: ?HTMLElement;
   tooltip: ?HTMLDivElement;
 
   render() {
-    const tooltip = ReactDOM.createPortal(
-      <div
-        className="Tooltip"
-        ref={el => {
-          this.tooltip = el;
-        }}
-      >
-        {this.props.title}
-      </div>,
-      // $FlowFixMe
-      document.body
-    );
+    let tooltip = null;
+    if (this.state.isHover) {
+      tooltip = ReactDOM.createPortal(
+        <div
+          className={classnames('Tooltip', this.props.className)}
+          ref={el => {
+            this.tooltip = el;
+          }}
+        >
+          {this.props.title}
+        </div>,
+        // $FlowFixMe
+        document.body
+      );
+    }
 
     const component = (
       <React.Fragment>
