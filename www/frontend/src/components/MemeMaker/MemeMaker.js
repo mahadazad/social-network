@@ -4,12 +4,10 @@ import { fabric } from 'fabric';
 
 import Panel from '../Panel/Panel';
 
-import ToolbarButton from './MemeMakerToolbarButton';
-import Spinner from '../Spinner/Spinner';
-import ColorPicker from '../ColorPicker/ColorPicker';
-import Tooltip from '../Tooltip/Tooltip';
+import MemeMakerImages from './MemeMakerImages';
+import MemeMakerObjectActions from './MemeMakerObjectActions';
+import MemeMakerToolbar from './MemeMakerToolbar';
 
-import icons from './icons.json';
 import './MemeMaker.scss';
 
 fabric.Object.prototype.cornerColor = '#5598F5';
@@ -18,10 +16,13 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.rotatingPointOffset = 15;
 
 const TYPE_ITEXT = 'i-text';
+const ESC_KEY = 27;
 const ACTIONS_OFFSET_TOP = -30;
 const ACTIONS_OFFSET_LEFT = -50;
 
-type MemeMakerProps = {};
+type MemeMakerProps = {
+  onClose?: ?Function,
+};
 
 type MemeMakerState = {
   isDrawingMode: boolean,
@@ -29,6 +30,7 @@ type MemeMakerState = {
   strokeColor: string,
   isSelectionGroup: boolean,
   fill: string,
+  isImagePresetOpen: boolean,
 };
 
 class MemeMaker extends React.PureComponent<MemeMakerProps, MemeMakerState> {
@@ -38,19 +40,30 @@ class MemeMaker extends React.PureComponent<MemeMakerProps, MemeMakerState> {
     strokeColor: '#000',
     isSelectionGroup: false,
     fill: '#000',
+    isImagePresetOpen: false,
   };
 
   componentWillMount() {
     if (document.body) {
       document.body.style.overflow = 'hidden';
     }
+
+    document.addEventListener('keydown', this.onEsc);
   }
 
   componentWillUnmount() {
     if (document.body) {
       document.body.style.overflow = 'auto';
     }
+
+    document.removeEventListener('keydown', this.onEsc);
   }
+
+  onEsc = (e: KeyboardEvent) => {
+    if (e.keyCode === ESC_KEY && this.props.onClose) {
+      this.props.onClose();
+    }
+  };
 
   onCircleClick = () => {
     const object = new fabric.Circle({ ...this.defaultObjectOptions(), radius: 30 });
@@ -118,14 +131,83 @@ class MemeMaker extends React.PureComponent<MemeMakerProps, MemeMakerState> {
     });
   };
 
+  onImagePresetClick = () => {
+    this.setState(state => ({
+      isImagePresetOpen: !state.isImagePresetOpen,
+    }));
+  };
+
+  onImageUpload = (data: any) => {
+    fabric.Image.fromURL(data, img => {
+      this.addInCenter(img);
+    });
+  };
+
+  onToolbarActionClick = (type: string, ...args: any) => {
+    switch (type) {
+      case 'square':
+        this.onSquareClick(...args);
+        break;
+      case 'circle':
+        this.onCircleClick(...args);
+        break;
+      case 'pencil':
+        this.onPencilClick(...args);
+        break;
+      case 'text':
+        this.onTextClick(...args);
+        break;
+      case 'stroke-size':
+        this.onStrokeSizeChange(...args);
+        break;
+      case 'fill':
+        this.onFillColorChange(...args);
+        break;
+      case 'stroke-color':
+        this.onStrokeColorChange(...args);
+        break;
+      case 'preset-images':
+        this.onImagePresetClick(...args);
+        break;
+      case 'upload-image':
+        this.onImageUpload(...args);
+        break;
+      default:
+        this.onPointerClick(...args);
+    }
+  };
+
+  onActionClick = (type: string) => {
+    switch (type) {
+      case 'move-up':
+        this.onObjectMoveUp();
+        break;
+      case 'move-down':
+        this.onObjectMoveDown();
+        break;
+      case 'flip-x':
+        this.onObjectFlipX();
+        break;
+      case 'flip-y':
+        this.onObjectFlipY();
+        break;
+      case 'clone':
+        this.onObjectClone();
+        break;
+      default:
+        this.onObjectRemove();
+    }
+  };
+
   onObjectRemove = () => {
     const { canvas } = this;
     const group = canvas.getActiveGroup();
+
     if (group) {
       canvas.discardActiveGroup();
       group.getObjects().forEach(object => canvas.remove(object));
     } else if (canvas.getActiveObject()) {
-      canvas.getActiveObject().remove();
+      canvas.remove(canvas.getActiveObject());
     }
   };
 
@@ -133,6 +215,10 @@ class MemeMaker extends React.PureComponent<MemeMakerProps, MemeMakerState> {
     fabric.Image.fromURL(image, object => {
       this.addInCenter(object);
     });
+  };
+
+  onImagePresetClose = () => {
+    this.setState({ isImagePresetOpen: false });
   };
 
   setObjectProperties = (opts: Object) => {
@@ -305,98 +391,41 @@ class MemeMaker extends React.PureComponent<MemeMakerProps, MemeMakerState> {
   render() {
     return (
       <div className="MemeMaker">
-        <div className="MemeMaker__toolbar">
-          <div className="MemeMaker__buttons">
-            <ToolbarButton title="select" icon="fa-mouse-pointer" onClick={this.onPointerClick} />
-            <ToolbarButton title="square" icon="fa-square" onClick={this.onSquareClick} />
-            <ToolbarButton title="circle" icon="fa-circle" onClick={this.onCircleClick} />
-            <ToolbarButton
-              title="circle"
-              icon="fa-pencil"
-              onClick={this.onPencilClick}
-              isActive={this.state.isDrawingMode}
-            />
-            <ToolbarButton title="text" icon="fa-font" onClick={this.onTextClick} />
-          </div>
-
-          <div className="MemeMaker__toolbar-set">
-            <strong className="MemeMaker__toolbar-label">Stroke Size</strong>
-            <Spinner min={1} max={50} value={this.state.strokeSize} onChange={this.onStrokeSizeChange} />
-          </div>
-
-          <div className="MemeMaker__toolbar-set">
-            <strong className="MemeMaker__toolbar-label">Fill Color</strong>
-            <ColorPicker color={this.state.fill} onChange={this.onFillColorChange} />
-          </div>
-
-          <div className="MemeMaker__toolbar-set">
-            <strong className="MemeMaker__toolbar-label">Stroke Color</strong>
-            <ColorPicker color={this.state.strokeColor} onChange={this.onStrokeColorChange} />
-          </div>
-        </div>
+        <MemeMakerToolbar
+          isDrawingMode={this.state.isDrawingMode}
+          fill={this.state.fill}
+          strokeColor={this.state.strokeColor}
+          strokeSize={this.state.strokeSize}
+          onActionClick={this.onToolbarActionClick}
+        />
 
         <Panel classNameMain="MemeMaker__panel" className="MemeMaker__panel-content" title="Meme Maker">
-          <div
-            className="MemeMaker__object-actions"
-            ref={el => {
+          <MemeMakerObjectActions
+            onMount={el => {
               this.objectActionsEl = el;
             }}
-          >
-            <Tooltip title="bring forward">
-              <button className="MemeMaker__object-action" onClick={this.onObjectMoveUp}>
-                <span className="fa fa-arrow-up" />
-              </button>
-            </Tooltip>
-            <Tooltip title="send backward">
-              <button className="MemeMaker__object-action" onClick={this.onObjectMoveDown}>
-                <span className="fa fa-arrow-down" />
-              </button>
-            </Tooltip>
-            <Tooltip title="flip horizontally">
-              <button className="MemeMaker__object-action" onClick={this.onObjectFlipX}>
-                <span className="fa fa-exchange" />
-              </button>
-            </Tooltip>
-            <Tooltip title="flip vertically">
-              <button className="MemeMaker__object-action" onClick={this.onObjectFlipY}>
-                <span className="fa fa-exchange fa-rotate-90" />
-              </button>
-            </Tooltip>
-            <Tooltip title="clone">
-              <button className="MemeMaker__object-action" onClick={this.onObjectClone}>
-                <span className="fa fa-clone" />
-              </button>
-            </Tooltip>
-            <Tooltip title="remove">
-              <button className="MemeMaker__object-action" onClick={this.onObjectRemove}>
-                <span className="fa fa-trash" />
-              </button>
-            </Tooltip>
-          </div>
-
-          <div className="MemeMaker__preset-images">
-            <div className="MemeMaker__preset-images-inner">
-              {icons.map(icon => (
-                <button className="MemeMaker__preset-image-button" key={icon} onClick={() => this.onLoadImage(icon)}>
-                  <img className="MemeMaker__preset-image" src={icon} />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <canvas
-            width="650"
-            height="650"
-            className="MemeMaker__canvas"
-            ref={(el: ?HTMLCanvasElement) => {
-              if (!this.canvas) {
-                this.canvasEl = el;
-                this.canvas = new fabric.Canvas(el);
-                this.attachEvents();
-                window.canvas = this.canvas;
-              }
-            }}
+            onActionClick={this.onActionClick}
           />
+
+          {this.state.isImagePresetOpen && (
+            <MemeMakerImages onImageClick={this.onLoadImage} onClose={this.onImagePresetClose} />
+          )}
+
+          <div>
+            <canvas
+              width="650"
+              height="650"
+              className="MemeMaker__canvas"
+              ref={(el: ?HTMLCanvasElement) => {
+                if (!this.canvas) {
+                  this.canvasEl = el;
+                  this.canvas = new fabric.Canvas(el);
+                  this.attachEvents();
+                  window.canvas = this.canvas;
+                }
+              }}
+            />
+          </div>
         </Panel>
       </div>
     );

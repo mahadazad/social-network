@@ -1,0 +1,33 @@
+.MemeMakerToolbar {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  width: 85px;
+  margin: auto 0;
+  background: white;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 0 3px rgb(0, 0, 0);
+  padding: 10px;
+
+  .rc-color-picker-wrap,
+  .rc-color-picker-trigger {
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__toolbar-set {
+    margin-top: 10px;
+  }
+
+  &__toolbar-label {
+    display: block;
+    color: #000;
+    font-size: 0.8em;
+  }
+}

@@ -103,7 +103,6 @@ class ProfilePage extends React.Component<ProfilePageProps, ProfilePageState> {
         <Sidebar position="right">
           <SidebarUsers title="Followers" users={followers} />
         </Sidebar>
-        <MemeMaker />
       </Fragment>
     );
   }

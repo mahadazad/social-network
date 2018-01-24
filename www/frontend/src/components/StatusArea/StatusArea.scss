@@ -8,4 +8,16 @@
     border-top: none;
     border-bottom: none;
   }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__footer-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 }
